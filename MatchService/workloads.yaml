@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: matchservice
+spec:
+  selector:
+    app: matchservice
+  type: NodePort
+  ports:
+    - name: http
+      port: 8081
+      nodePort: 31001
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: matchservice
+spec:
+  selector:
+    matchLabels:
+      app: matchservice
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: matchservice
+    spec:
+      containers:
+        - name: server
+          image: ironicmageinc/matchservice
+          ports:
+            - name: http
+              containerPort: 8081
+
+---

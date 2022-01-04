@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: devservice
+spec:
+  selector:
+    app: devservice
+  type: NodePort
+  ports:
+    - name: http
+      port: 8082
+      nodePort: 31002
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devservice
+spec:
+  selector:
+    matchLabels:
+      app: devservice
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: devservice
+    spec:
+      containers:
+        - name: server
+          image: ironicmageinc/devservice
+          ports:
+            - name: http
+              containerPort: 8082
+
+---
