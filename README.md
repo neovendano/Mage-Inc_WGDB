@@ -1,2 +1,2 @@
-# Mage-Inc WGDB
-# https://www.mage-inc.com/
+Mage-Inc WGDB
+https://www.mage-inc.com/
