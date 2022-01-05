@@ -30,6 +30,16 @@ public class GameController {
         }
     }
 
+    @GetMapping("/fetchName/{id}")
+    public ResponseEntity<String> throwName(@PathVariable long id){
+        try {
+            final String game = gameService.fetchNameById(id);
+            return ResponseEntity.ok(game);
+        } catch(IllegalArgumentException e){
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @PostMapping
     public ResponseEntity<Void> create(@RequestBody Game newGame){
         final long id = gameService.create(newGame);
