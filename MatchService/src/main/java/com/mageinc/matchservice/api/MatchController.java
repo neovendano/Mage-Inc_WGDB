@@ -39,7 +39,7 @@ public class MatchController {
         }
     }
 
-    @GetMapping("/{id}/users")
+    @GetMapping("/{id}/game")
     public ResponseEntity<String> showGame(@PathVariable long id){
         try {
             final String game= matchService.fetchGameNameById(id);
