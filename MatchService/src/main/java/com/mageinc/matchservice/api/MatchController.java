@@ -39,6 +39,15 @@ public class MatchController {
         }
     }
 
+    @GetMapping("/{id}/users")
+    public ResponseEntity<String> showGame(@PathVariable long id){
+        try {
+            final String game= matchService.fetchGameNameById(id);
+            return ResponseEntity.ok(game);
+        } catch(IllegalArgumentException e){
+            return ResponseEntity.notFound().build();
+        }
+    }
     @PostMapping
     public ResponseEntity<Void> create(@RequestBody Match newMatch){
         final long id = matchService.create(newMatch);
