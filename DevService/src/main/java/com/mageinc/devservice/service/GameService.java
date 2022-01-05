@@ -21,6 +21,13 @@ public class GameService {
         else return maybeGame.get();
     }
 
+    public String fetchNameById(long id)throws IllegalArgumentException {
+        Optional<Game> maybeGame = gameRepo.findById(id);
+        String error = "Game not found";
+        if(maybeGame.isEmpty()) return error;
+        else return maybeGame.get().getGameName();
+    }
+
     public long create(Game newGame){
         final Game savedGame = gameRepo.save(newGame);
         return savedGame.getId();

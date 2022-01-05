@@ -17,6 +17,7 @@ import java.util.*;
 public class MatchService {
     private final MatchRepo matchRepo;
     private static final String GET_USERNAME_URL = "http://localhost:8080/users/fetchName/{id}";
+    private static final String GET_GAMENAME_URL = "http://localhost:8082/games/fetchName/{id}";
     private static RestTemplate restTemplate = new RestTemplate();
 
     public List<Match> fetchAll(){
@@ -56,6 +57,23 @@ public class MatchService {
             usernames.add(resultSecond);
             usernames.add(resultWinner);
             return usernames;
+        }
+    }
+
+    public String fetchGameNameById (long id){
+        final Optional<Match> maybeMatch = matchRepo.findById(id);
+
+        if (maybeMatch.isEmpty()) throw new IllegalArgumentException("Match not found");
+        else
+        {
+            String gameId = String.valueOf(maybeMatch.get().getGameId());
+
+
+            Map<String, String> paramsFirst = new HashMap<String, String>();
+            paramsFirst.put("id", gameId);
+            String gameName = restTemplate.getForObject(GET_GAMENAME_URL, String.class, paramsFirst);
+
+            return gameName;
         }
     }
 
